@@ -27,6 +27,9 @@ export default {
 	methods: {
 		getNewFacts() {
 			facts.getNewFacts();
+		},
+		async toFactFifteen() {
+			await this.$router.push(`/facts/14`);
 		}
 	},
 	computed: {
@@ -71,6 +74,7 @@ export default {
 					<header class="facts__header">
 						<h1 class="facts__title">Facts About Cats To Share With Kids!</h1>
 					</header>
+					<button v-on:click="toFactFifteen">TO FACT #15</button>
 					<div class="facts__options">
 						<div class="facts__options-filter">
 							<input class="facts__options-filter-input" type="text" v-model="searchText" placeholder="Search facts here">
@@ -79,7 +83,7 @@ export default {
 						<UiSelect class="facts__options-select" :options="sortOptions" v-model="filterSelected"/>
 					</div>
 					<section class="facts__list" ref="factsList">
-						<FactsCard v-for="fact in filteredFacts" :key="fact.fact" :fact="fact"/>
+						<FactsCard v-for="fact in filteredFacts" :key="fact.id" :fact="fact"/>
 					</section>
 					<div class="facts__get">
 						<button v-if="!loading" class="facts__get-button" v-on:click="getNewFacts()">Load more facts</button>

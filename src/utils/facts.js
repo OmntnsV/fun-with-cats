@@ -28,28 +28,29 @@ export const facts = {
 		}
 	},
 
-	async getFactsTillLimit(limit) {
+	async addFactsTillLimit(limit) {
 		state.loading = true;
-		try {
-			const { data } = await axios.get('https://catfact.ninja/facts', {
-				params: { 'limit': limit }
-			});
-			this.processFetchedFacts(data);
-		} catch (e) {
-			console.error(e);
-		}
+		const { data } = await axios.get('https://catfact.ninja/facts', {
+			params: { 'limit': limit }
+		});
+		const receivedFacts = data.data;
+		this.assignIdsToFacts(receivedFacts);
+		const newFacts = receivedFacts.slice(state.facts.length);
+		state.facts.push(...newFacts);
+		this.addImagesToFacts();
+		state.loading = false;
 	},
 
 	processFetchedFacts(data) {
 		state.loading = false;
 		state.facts = state.facts.concat(data.data);
-		this.assignIdsToFacts()
+		this.assignIdsToFacts(state.facts);
 		this.addImagesToFacts()
 		state.nextPageUri = data['next_page_url'];
 	},
 
-	assignIdsToFacts() {
-		state.facts.map((fact, id) => {
+	assignIdsToFacts(factsList) {
+		factsList.map((fact, id) => {
 			if (!fact.id) fact.id = id;
 		});
 	},
@@ -68,12 +69,7 @@ export const facts = {
 
 	async getFactById(id) {
 		if (!state.facts[id]) {
-			try {
-				await this.getFactsTillLimit(Number(id) - state.facts.length + 1);
-			} catch (e) {
-				console.error(e);
-				return null
-			}
+			await this.addFactsTillLimit(Number(id) + 1);
 		}
 		return (state.facts[id]);
 	}
