@@ -1,0 +1,130 @@
+@use "./variables.scss";
+
+@font-face {
+  font-family: 'Hind';
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/Hind-Regular.ttf") format('trueType');
+}
+
+@font-face {
+  font-family: 'Hind';
+  font-style: normal;
+  font-weight: 500;
+  src: url("./assets/fonts/Hind-Medium.ttf") format('trueType');
+}
+
+@font-face {
+  font-family: 'Hind';
+  font-style: normal;
+  font-weight: 600;
+  src: url("./assets/fonts/Hind-SemiBold.ttf") format('trueType');
+}
+
+@font-face {
+  font-family: 'Hind';
+  font-style: normal;
+  font-weight: 700;
+  src: url("./assets/fonts/Hind-Bold.ttf") format('trueType');
+}
+
+:root {
+  --size-navbar-height: #{variables.$size-navbar-height};
+  --size-tablet: #{variables.$size-tablet};
+  --size-desktop: #{variables.$size-desktop};
+  --color-invalid: #{variables.$color-invalid};
+  --color-white: #fff;
+  --color-accent: #{variables.$color-accent};
+  --color-background-footer: #{variables.$color-background-footer};
+
+  --color-text-primary: #{variables.$color-text-primary-light};
+  --color-text-secondary: #{variables.$color-text-secondary-light};
+  --color-background: #{variables.$color-background-light};
+  --color-background-accent: #{variables.$color-background-accent-light};
+  --color-background-ui: #{variables.$color-background-ui-light};
+  --color-background-ui-active: #{variables.$color-background-ui-hover-light};
+  --color-text-ui-primary : #{variables.$color-text-ui-primary-light};
+  --color-text-ui-placeholder : #{variables.$color-text-ui-placeholder-light};
+  --color-button-primary: #{variables.$color-button-primary-light};
+  --color-text-ui-selected: #{variables.$color-text-ui-selected-light};
+  --color-text-ui-select: #{variables.$color-text-ui-select-light};
+}
+
+.dark {
+  --color-text-primary: #{variables.$color-text-primary-dark};
+  --color-text-secondary: #{variables.$color-text-secondary-dark};
+  --color-background: #{variables.$color-background-dark};
+  --color-background-accent: #{variables.$color-background-accent-dark};
+  --color-background-ui: #{variables.$color-background-ui-dark};
+  --color-background-ui-active: #{variables.$color-background-ui-hover-dark};
+  --color-text-ui-primary : #{variables.$color-text-ui-primary-dark};
+  --color-text-ui-placeholder : #{variables.$color-text-ui-placeholder-dark};
+  --color-button-primary: #{variables.$color-button-primary-dark};
+  --color-text-ui-selected: #{variables.$color-text-ui-selected-dark};
+  --color-text-ui-select: #{variables.$color-text-ui-select-dark};
+}
+
+body {
+  font-family: 'Hind', sans-serif;
+  font-size: 16px;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1326px;
+  margin: 0 auto;
+  padding: 15px;
+  width: 100%;
+}
+
+input, .select {
+  outline: none;
+  border: none;
+  background-color: var(--color-background-ui);
+  color: var(--color-text-ui-primary);
+  border-radius: 6px;
+  padding: 12px 1em;
+  transition: background-color 0.3s, color 0.3s, outline 0.3s;
+  font-size: 1em;
+  line-height: 24px;
+}
+
+input::placeholder {
+  color: var(--color-text-ui-placeholder);
+}
+
+input:invalid {
+  outline: 1px solid var(--color-invalid);
+}
+
+button {
+  background-color: var(--color-background-ui);
+  color: var(--color-text-ui-primary);
+  border: none;
+  border-radius: 6px;
+  padding: 15px 90px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
