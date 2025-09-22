@@ -39,7 +39,7 @@ export default {
 			return facts.isLastPage;
 		},
 		filteredFacts() {
-			let result = this.facts.filter(f => f.fact.includes(this.searchText));
+			let result = this.facts.filter(f => f.fact.toLowerCase().includes(this.searchText.toLowerCase()));
 			switch(this.filterSelected) {
 				case 'longer-first':
 					result.sort((a, b) => b.fact.length - a.fact.length);
@@ -60,6 +60,26 @@ export default {
 	async mounted() {
 		if (this.facts.length === 0) {
 			await facts.getNewFacts();
+		}
+	},
+	watch: {
+		searchText() {
+			this.$router.push({
+				name: 'facts',
+				query: {
+					...this.$route.query,
+					search: this.searchText,
+				}
+			})
+		},
+		filterSelected(){
+			this.$router.push({
+				name: 'facts',
+				query: {
+					...this.$route.query,
+					sort: this.filterSelected,
+				}
+			});
 		}
 	}
 }
