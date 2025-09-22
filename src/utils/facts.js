@@ -54,6 +54,7 @@ export const facts = {
 	addIdsToFacts(factsList) {
 		return factsList.map((fact, id) => {
 			if (!fact.id) fact.id = id;
+			return fact;
 		})
 	},
 
@@ -62,6 +63,7 @@ export const facts = {
 		return factsList.map((fact) => {
 			if (!fact.imageSrc) {
 				fact.imageSrc = require(`@/assets/cats/Pic${imageIterator}.png`);
+				return fact;
 			}
 			imageIterator++;
 			if (imageIterator >= 9) imageIterator = 1;

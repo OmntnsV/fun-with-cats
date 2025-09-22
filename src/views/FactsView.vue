@@ -26,6 +26,7 @@ export default {
 	methods: {
 		getNewFacts() {
 			facts.getNewFacts();
+			console.log(this.facts);
 		},
 	},
 	computed: {
