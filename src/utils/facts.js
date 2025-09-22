@@ -5,6 +5,7 @@ const state = Vue.observable({
 	facts: [],
 	loading: false,
 	nextPageUri: 'https://catfact.ninja/facts',
+	isLastPage: false,
 })
 
 export const facts = {
@@ -16,29 +17,33 @@ export const facts = {
 		return state.loading;
 	},
 
+	get isLastPage() {
+		return state.isLastPage;
+	},
+
 	async getNewFacts(limit = 10) {
-		state.loading = true;
-		try {
-			const { data } = await axios.get(state.nextPageUri, {
-				params: { 'limit': limit }
-			});
-			this.processFetchedFacts(data);
-		} catch (e) {
-			console.error(e);
-		}
+		const data = await this.getFactsFromUrlWithLimit(state.nextPageUri, limit)
+		this.processFetchedFacts(data);
 	},
 
 	async addFactsTillLimit(limit) {
-		state.loading = true;
-		const { data } = await axios.get('https://catfact.ninja/facts', {
-			params: { 'limit': limit }
-		});
+		const data = await this.getFactsFromUrlWithLimit(undefined, limit)
 		const receivedFacts = data.data;
 		this.assignIdsToFacts(receivedFacts);
 		const newFacts = receivedFacts.slice(state.facts.length);
 		state.facts.push(...newFacts);
 		this.addImagesToFacts();
 		state.loading = false;
+	},
+
+	async getFactsFromUrlWithLimit(url = 'https://catfact.ninja/facts', limit) {
+		state.loading = true;
+		const { data } = await axios.get(url, {
+			params: { 'limit': limit }
+		});
+		state.isLastPage = !!data.next_page_url;
+		state.loading = false;
+		return data;
 	},
 
 	processFetchedFacts(data) {

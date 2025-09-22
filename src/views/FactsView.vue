@@ -39,6 +39,9 @@ export default {
 		loading() {
 			return facts.loading;
 		},
+		canLoadMore() {
+			return facts.isLastPage;
+		},
 		filteredFacts() {
 			let result = this.facts.filter(f => f.fact.includes(this.searchText));
 			switch(this.filterSelected) {
@@ -84,7 +87,7 @@ export default {
 					<section class="facts__list" ref="factsList">
 						<FactsCard v-for="fact in filteredFacts" :key="fact.id" :fact="fact"/>
 					</section>
-					<div class="facts__get">
+					<div class="facts__get" v-if="canLoadMore">
 						<button v-if="!loading" class="facts__get-button" v-on:click="getNewFacts()">Load more facts</button>
 						<IconLoader v-else style="width: 20px; height: 20px"/>
 					</div>
