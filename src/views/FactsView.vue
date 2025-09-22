@@ -27,9 +27,6 @@ export default {
 		getNewFacts() {
 			facts.getNewFacts();
 		},
-		async toFactFifteen() {
-			await this.$router.push(`/facts/14`);
-		}
 	},
 	computed: {
 		facts() {

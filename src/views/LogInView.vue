@@ -54,6 +54,7 @@ export default {
 	},
 	watch: {
 		name() {
+			if (!auth.isAuthenticated)
 			this.debouncedValidate();
 		}
 	},
