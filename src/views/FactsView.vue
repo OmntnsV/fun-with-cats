@@ -4,11 +4,10 @@ import UiSelect from "@/components/Select.vue";
 import IconLoader from "@/components/icons/IconLoader.vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
 import {facts} from "@/utils/facts";
-import PageFooter from "@/components/Footer.vue";
 
 export default {
 	name: "FactsView",
-	components: {PageFooter, IconSearch, IconLoader, UiSelect, FactsCard },
+	components: { IconSearch, IconLoader, UiSelect, FactsCard },
 	data() {
 		return {
 			searchText: this.$route.query.search || '',
@@ -70,32 +69,29 @@ export default {
 </script>
 
 <template>
-	<div>
-		<main class="facts">
-			<div class="container">
-				<div class="facts__inner">
-					<header class="facts__header">
-						<h1 class="facts__title">Facts About Cats To Share With Kids!</h1>
-					</header>
-					<div class="facts__options">
-						<div class="facts__options-filter">
-							<input class="facts__options-filter-input" type="text" v-model="searchText" placeholder="Search facts here">
-							<IconSearch class="facts__options-filter-icon" />
-						</div>
-						<UiSelect class="facts__options-select" :options="sortOptions" v-model="filterSelected"/>
+	<main class="facts">
+		<div class="container">
+			<div class="facts__inner">
+				<header class="facts__header">
+					<h1 class="facts__title">Facts About Cats To Share With Kids!</h1>
+				</header>
+				<div class="facts__options">
+					<div class="facts__options-filter">
+						<input class="facts__options-filter-input" type="text" v-model="searchText" placeholder="Search facts here">
+						<IconSearch class="facts__options-filter-icon" />
 					</div>
-					<section class="facts__list" ref="factsList">
-						<FactsCard v-for="fact in filteredFacts" :key="fact.id" :fact="fact"/>
-					</section>
-					<div class="facts__get" v-if="canLoadMore">
-						<button v-if="!loading" class="facts__get-button" v-on:click="getNewFacts()">Load more facts</button>
-						<IconLoader v-else style="width: 20px; height: 20px"/>
-					</div>
+					<UiSelect class="facts__options-select" :options="sortOptions" v-model="filterSelected"/>
+				</div>
+				<section class="facts__list" ref="factsList">
+					<FactsCard v-for="fact in filteredFacts" :key="fact.id" :fact="fact"/>
+				</section>
+				<div class="facts__get" v-if="canLoadMore">
+					<button v-if="!loading" class="facts__get-button" v-on:click="getNewFacts()">Load more facts</button>
+					<IconLoader v-else style="width: 20px; height: 20px"/>
 				</div>
 			</div>
-		</main>
-		<PageFooter />
-	</div>
+		</div>
+	</main>
 </template>
 
 <style scoped lang="scss">
@@ -103,7 +99,6 @@ export default {
 
 .facts {
 	margin-top: var(--size-navbar-height);
-	min-height: calc(100svh - var(--size-navbar-height));
 
 	&__inner {
 		display: flex;

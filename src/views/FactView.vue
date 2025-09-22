@@ -1,11 +1,9 @@
 <script>
 import {facts} from "@/utils/facts";
 import IconDropdownCaret from "@/components/icons/IconDropdownCaret.vue";
-import PageFooter from "@/components/Footer.vue";
-// import {authMiddleware} from "@/router/middlewares";
 export default {
 	name: 'FactView',
-	components: {PageFooter, IconDropdownCaret},
+	components: {IconDropdownCaret},
 	data() {
 		return {
 			fact: {}
@@ -20,7 +18,6 @@ export default {
 </script>
 
 <template>
-	<div>
 		<div class="fact">
 			<div class="container">
 				<RouterLink class="fact__back" to="/facts">
@@ -33,14 +30,11 @@ export default {
 				</div>
 			</div>
 		</div>
-		<PageFooter />
-	</div>
 </template>
 
 <style scoped lang="scss">
 	.fact {
 		margin-top: var(--size-navbar-height);
-		min-height: calc(100svh - var(--size-navbar-height));
 
 		&__back {
 			display: flex;
