@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import axios from "axios";
 
+const API_URL = 'https://catfact.ninja/facts';
+
 const state = Vue.observable({
 	facts: [],
 	loading: false,
-	nextPageUri: 'https://catfact.ninja/facts',
+	nextPageUri: API_URL,
 	isLastPage: false,
 })
 
@@ -22,21 +24,24 @@ export const facts = {
 	},
 
 	async getNewFacts(limit = 10) {
-		const data = await this.getFactsFromUrlWithLimit(state.nextPageUri, limit)
-		this.processFetchedFacts(data);
+		const data = await this.getLimitOfFactsFromUrl(limit, state.nextPageUri);
+		state.nextPageUri = data['next_page_url'];
+		const receivedFacts = data.data;
+		const fullFactsList = state.facts.concat(receivedFacts);
+		const fullFactsListWithIds = this.addIdsToFacts(fullFactsList);
+		state.facts = this.addImagesToFacts(fullFactsListWithIds);
 	},
 
 	async addFactsTillLimit(limit) {
-		const data = await this.getFactsFromUrlWithLimit(undefined, limit)
+		const data = await this.getLimitOfFactsFromUrl(limit)
 		const receivedFacts = data.data;
-		this.assignIdsToFacts(receivedFacts);
-		const newFacts = receivedFacts.slice(state.facts.length);
-		state.facts.push(...newFacts);
-		this.addImagesToFacts();
-		state.loading = false;
+		const receivedFactsWithIds = this.addIdsToFacts(receivedFacts);
+		const newFacts = receivedFactsWithIds.slice(state.facts.length);
+		const fullFactsWithIds = state.facts.concat(newFacts);
+		state.facts = this.addImagesToFacts(fullFactsWithIds);
 	},
 
-	async getFactsFromUrlWithLimit(url = 'https://catfact.ninja/facts', limit) {
+	async getLimitOfFactsFromUrl(limit, url = API_URL) {
 		state.loading = true;
 		const { data } = await axios.get(url, {
 			params: { 'limit': limit }
@@ -46,30 +51,21 @@ export const facts = {
 		return data;
 	},
 
-	processFetchedFacts(data) {
-		state.loading = false;
-		state.facts = state.facts.concat(data.data);
-		this.assignIdsToFacts(state.facts);
-		this.addImagesToFacts()
-		state.nextPageUri = data['next_page_url'];
-	},
-
-	assignIdsToFacts(factsList) {
-		factsList.map((fact, id) => {
+	addIdsToFacts(factsList) {
+		return factsList.map((fact, id) => {
 			if (!fact.id) fact.id = id;
-		});
+		})
 	},
 
-	addImagesToFacts() {
+	addImagesToFacts(factsList) {
 		let imageIterator = 1;
-		for (let i = 0; i < state.facts.length; i++) {
-			const fact = state.facts[i];
+		return factsList.map((fact) => {
 			if (!fact.imageSrc) {
 				fact.imageSrc = require(`@/assets/cats/Pic${imageIterator}.png`);
 			}
 			imageIterator++;
 			if (imageIterator >= 9) imageIterator = 1;
-		}
+		})
 	},
 
 	async getFactById(id) {
