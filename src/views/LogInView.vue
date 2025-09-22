@@ -56,6 +56,9 @@ export default {
 		name() {
 			this.debouncedValidate();
 		}
+	},
+	async mounted() {
+		if (auth.isAuthenticated) await this.$router.push("/facts");
 	}
 };
 </script>
