@@ -63,10 +63,10 @@ export const facts = {
 		return factsList.map((fact) => {
 			if (!fact.imageSrc) {
 				fact.imageSrc = require(`@/assets/cats/Pic${imageIterator}.png`);
-				return fact;
 			}
 			imageIterator++;
 			if (imageIterator >= 9) imageIterator = 1;
+			return fact;
 		})
 	},
 
