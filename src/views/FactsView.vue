@@ -185,18 +185,18 @@ export default {
 		display: grid;
 		grid-template-columns: 1fr;
 		row-gap: 40px;
-		justify-content: space-between;
+		justify-items: center;
 		gap: 1.5rem;
 		position: relative;
 		width: fit-content;
 		margin: 0 auto;
 
-		@media screen and (min-width: #{variables.$size-tablet}) {
+		@include tablet {
 			grid-template-columns: repeat(2, 1fr);
 			min-width: 100%;
 		}
 
-		@media screen and (min-width: #{variables.$size-desktop}) {
+		@include desktop {
 			grid-template-columns: repeat(3, 1fr);
 		}
 	}
