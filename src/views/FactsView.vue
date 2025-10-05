@@ -127,11 +127,11 @@ export default {
 		text-align: center;
 		font-size: 2em;
 
-		@media screen and (min-width: #{variables.$size-tablet}) {
+		@include tablet {
 			font-size: 2.5em;
 		}
 
-		@media screen and (min-width: #{variables.$size-desktop}) {
+		@include desktop {
 			font-size: 3.5em;
 		}
 	}
@@ -168,7 +168,7 @@ export default {
 			cursor: pointer;
 		}
 
-		@media screen and (min-width: #{variables.$size-tablet}) {
+		@include tablet {
 			flex-direction: row;
 
 			&-filter {

@@ -48,7 +48,7 @@
 				color: var(--color-accent);
 				display: none;
 
-				@media screen and (min-width: #{variables.$size-tablet}) {
+				@include tablet {
 					display: initial;
 				}
 			}

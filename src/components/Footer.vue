@@ -68,7 +68,7 @@ export default {
 			gap: 1.5em;
 			flex-direction: column;
 
-			@media screen and (min-width: #{variables.$size-tablet}) {
+			@include tablet {
 				flex-direction: row;
 				justify-content: space-between;
 			}
@@ -84,7 +84,7 @@ export default {
 				color: var(--color-white);
 				display: none;
 
-				@media screen and (min-width: #{variables.$size-tablet}) {
+				@include tablet {
 					display: initial;
 				}
 			}
@@ -103,7 +103,7 @@ export default {
 			flex-direction: column;
 			gap: 2em;
 
-			@media screen and (min-width: #{variables.$size-tablet}) {
+			@include tablet {
 				flex-direction: row;
 			}
 
@@ -113,7 +113,7 @@ export default {
 				align-items: center;
 				gap: .5em;
 
-				@media screen and (min-width: #{variables.$size-tablet}) {
+				@include tablet {
 					align-items: flex-start;
 				}
 
@@ -132,7 +132,7 @@ export default {
 				align-items: center;
 				gap: .5em;
 
-				@media screen and (min-width: #{variables.$size-tablet}) {
+				@include tablet {
 					align-items: flex-start;
 				}
 
@@ -162,7 +162,7 @@ export default {
 			align-items: center;
 			gap: 1em;
 
-			@media screen and (min-width: #{variables.$size-tablet}) {
+			@include tablet {
 				flex-direction: row;
 				justify-content: space-between;
 			}

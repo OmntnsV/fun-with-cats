@@ -42,7 +42,7 @@ export default {
 			background-color: var(--color-background-ui-active);
 		}
 
-		@media screen and (min-width: #{variables.$size-tablet}) {
+		@include tablet {
 			max-width: 100%;
 		}
 
